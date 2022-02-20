@@ -1,15 +1,20 @@
 import { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-
-import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
 import AppLoading from "expo-app-loading";
+import { Ionicons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import { useReactiveVar } from "@apollo/client";
+
+import LoggedOutNav from "./navigators/LoggedOutNav";
+import LoggedInNav from "./navigators/LoggedInNav";
+import { isLoggedInVar } from "./apollo";
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const onFinish = () => setLoading(false);
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
+
   const preload = async () => {
     const fontToLoad = [Ionicons.font];
     const fontPromises = fontToLoad.map((font) => Font.loadAsync(font));
@@ -32,25 +37,8 @@ export default function App() {
     );
   else
     return (
-      <View style={styles.container}>
-        <Text>Hello</Text>
-        <Text>
-          👨‍🏫
-          <Ionicons name="ios-laptop-outline" size={24} color="black" />
-          <Ionicons name="ios-laptop-sharp" size={24} color="black" />
-          🥰
-        </Text>
-        <Text>I bought MacBook Pro at 2 weeks ago</Text>
-        <StatusBar style="auto" />
-      </View>
+      <NavigationContainer>
+        {isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}
+      </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
