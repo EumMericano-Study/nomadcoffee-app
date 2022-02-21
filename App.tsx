@@ -4,11 +4,11 @@ import { Asset } from "expo-asset";
 import AppLoading from "expo-app-loading";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
-import { useReactiveVar } from "@apollo/client";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
 
 import LoggedOutNav from "./navigators/LoggedOutNav";
 import LoggedInNav from "./navigators/LoggedInNav";
-import { isLoggedInVar } from "./apollo";
+import client, { isLoggedInVar } from "./apollo";
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,8 +37,10 @@ export default function App() {
     );
   else
     return (
-      <NavigationContainer>
-        {isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}
-      </NavigationContainer>
+      <ApolloProvider client={client}>
+        <NavigationContainer>
+          {isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}
+        </NavigationContainer>
+      </ApolloProvider>
     );
 }
