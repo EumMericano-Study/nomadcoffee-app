@@ -27,7 +27,6 @@ export default function CreateAccount({ navigation }: Props) {
   const passwordRef = useRef<TextInput>(null);
 
   const onCompleted = (data: any) => {
-    console.log(data);
     const {
       createAccount: { ok },
     } = data;
@@ -44,7 +43,6 @@ export default function CreateAccount({ navigation }: Props) {
     nextRef?.current?.focus();
 
   const onValid = (data: { [x: string]: string }) => {
-    console.log(loading, data);
     if (!loading) createAccountMutation({ variables: { ...data } });
   };
 
