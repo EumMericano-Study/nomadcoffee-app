@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { Text } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Text, TextInput } from "react-native";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
 
 import AuthLayout from "../components/auth/AuthLayout";
 import AuthButton from "../components/auth/AuthButton";
-import { Props } from "../types";
 import { isLoggedInVar } from "../apollo";
+import { StyledTextInput } from "../components/auth/AuthShared";
 
 const LOGIN_MUTATION = gql`
   mutation login($username: String!, $password: String!) {
-    login(username: $userName, password: $password) {
+    login(username: $username, password: $password) {
       ok
       token
       error
@@ -18,13 +18,18 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-export default function LogIn({ navigation }: Props) {
-  const { register, handleSubmit, setValue, watch } = useForm();
+export default function LogIn({ route: { params } }: any) {
+  const { register, handleSubmit, setValue, watch } = useForm({
+    defaultValues: { password: params?.password, username: params?.username },
+  });
+
+  const passwordRef = useRef<TextInput>(null);
 
   const onCompleted = (data: any) => {
     const {
       login: { ok, token },
     } = data;
+    console.log(ok, token);
     if (ok) {
       isLoggedInVar(true);
     }
@@ -43,17 +48,39 @@ export default function LogIn({ navigation }: Props) {
     }
   };
 
+  const onNext = (nextOne: React.RefObject<TextInput>) =>
+    nextOne?.current?.focus();
+
   useEffect(() => {
-    register("userame");
-    register("password");
+    register("username", {
+      required: true,
+    });
+    register("password", {
+      required: true,
+    });
   }, [register]);
 
   return (
     <AuthLayout>
       <Text>LogIn</Text>
+      <StyledTextInput
+        placeholder="아이디"
+        placeholderTextColor="rgba(255,255,255,0.8)"
+        returnKeyType="next"
+        onSubmitEditing={() => onNext(passwordRef)}
+        onChangeText={(text: string) => setValue("username", text)}
+      />
+      <StyledTextInput
+        ref={passwordRef}
+        placeholder="비밀번호"
+        placeholderTextColor="rgba(255,255,255,0.8)"
+        returnKeyType="next"
+        onSubmitEditing={handleSubmit(onValid)}
+        onChangeText={(text: string) => setValue("password", text)}
+      />
       <AuthButton
-        text="Go to Create Account"
-        disabled={false}
+        text="계정 생성"
+        disabled={!watch("username") || !watch("password")}
         loading={loading}
         onPress={handleSubmit(onValid)}
       />

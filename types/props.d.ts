@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 type RootStackParamList = {
   Home: undefined;
   Search: undefined;
-  LogIn: undefined;
+  LogIn?: { username: string; password: string };
   CreateAccount: undefined;
 };
 
