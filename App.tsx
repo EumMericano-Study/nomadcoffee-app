@@ -6,15 +6,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 
-import LoggedOutNav from "./navigators/LoggedOutNav";
-import LoggedInNav from "./navigators/LoggedInNav";
+import TabNav from "./navigators/indexNav";
 import client, { isLoggedInVar, tokenVar } from "./apollo";
 import AsyncStorageLib from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const onFinish = () => setLoading(false);
-  const isLoggedIn = useReactiveVar(isLoggedInVar);
 
   const preloadAssets = async () => {
     const fontToLoad = [Ionicons.font];
@@ -50,7 +48,7 @@ export default function App() {
     return (
       <ApolloProvider client={client}>
         <NavigationContainer>
-          {isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}
+          <TabNav />
         </NavigationContainer>
       </ApolloProvider>
     );
