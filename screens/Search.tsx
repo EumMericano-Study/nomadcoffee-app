@@ -1,9 +1,12 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { Props } from "../types";
 
-export default function Search() {
+export default function Search({ navigation }: Props) {
   return (
     <View style={{ backgroundColor: "black", flex: 1 }}>
-      <Text style={{ color: "white" }}>Search</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+        <Text style={{ color: "white" }}>Search</Text>
+      </TouchableOpacity>
     </View>
   );
 }

@@ -9,6 +9,7 @@ import LogIn from "../screens/LogIn";
 import Profile from "../screens/Profile";
 import Notification from "../screens/Notification";
 import TabIcon from "../components/nav/TabIcon";
+import StackNavFactory from "../components/nav/StackNavFactory";
 
 const Tabs = createBottomTabNavigator();
 
@@ -29,22 +30,24 @@ export default function LoggedOutNav() {
     >
       <Tabs.Screen
         name="Feed"
-        component={Feed}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName="home" color={color} focused={focused} />
           ),
         }}
-      />
+      >
+        {() => <StackNavFactory screenName="Feed" />}
+      </Tabs.Screen>
       <Tabs.Screen
         name="Search"
-        component={Search}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName="search" color={color} focused={focused} />
           ),
         }}
-      />
+      >
+        {() => <StackNavFactory screenName="Search" />}
+      </Tabs.Screen>
       <Tabs.Screen
         name="Camera"
         component={Search}
@@ -56,22 +59,24 @@ export default function LoggedOutNav() {
       />
       <Tabs.Screen
         name="Notification"
-        component={Notification}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName="heart" color={color} focused={focused} />
           ),
         }}
-      />
+      >
+        {() => <StackNavFactory screenName="Notification" />}
+      </Tabs.Screen>
       <Tabs.Screen
-        name="Profile"
-        component={isLoggedIn ? Profile : LogIn}
+        name="Me"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName="person" color={color} focused={focused} />
           ),
         }}
-      />
+      >
+        {() => <StackNavFactory screenName="Me" />}
+      </Tabs.Screen>
     </Tabs.Navigator>
   );
 }

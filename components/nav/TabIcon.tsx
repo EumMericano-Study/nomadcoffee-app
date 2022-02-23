@@ -2,7 +2,7 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
-  iconName: any;
+  iconName: "camera" | "home" | "search" | "heart" | "person";
   color: string;
   focused: boolean;
 }
