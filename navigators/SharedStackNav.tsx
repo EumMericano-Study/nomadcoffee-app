@@ -55,8 +55,10 @@ export default function SharedStackNav({ screenName }: Props) {
       {screenName === "Notification" && (
         <Stack.Screen name="Notification" component={Notification} />
       )}
-      {screenName === "Me" ? <Stack.Screen name="Me" component={Me} /> : null}
-      <Stack.Screen name="Profile" component={isLoggedIn ? Profile : LogIn} />
+      {screenName === "Me" ? (
+        <Stack.Screen name="Me" component={isLoggedIn ? Me : LogIn} />
+      ) : null}
+      <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Photo" component={Photo} />
     </Stack.Navigator>
   );
