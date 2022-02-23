@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "../screens/Profile";
 import LogIn from "../screens/LogIn";
@@ -30,7 +31,24 @@ export default function SharedStackNav({ screenName }: Props) {
         headerBackTitleVisible: false,
       }}
     >
-      {screenName === "Feed" && <Stack.Screen name="Feed" component={Feed} />}
+      {screenName === "Feed" && (
+        <Stack.Screen
+          name="Feed"
+          component={Feed}
+          options={{
+            headerTitle: () => (
+              <Image
+                style={{
+                  maxWidth: 100,
+                  maxHeight: 45,
+                }}
+                resizeMode="contain"
+                source={require("../assets/charLogo.png")}
+              />
+            ),
+          }}
+        />
+      )}
       {screenName === "Search" && (
         <Stack.Screen name="Search" component={Search} />
       )}

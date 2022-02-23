@@ -6,7 +6,6 @@ import { Props } from "../types";
 export default function Feed({ navigation }: Props) {
   return (
     <Container>
-      <Logo resizeMode="contain" source={require("../assets/charLogo.png")} />
       <CreateAccount>
         <CreateAccountText onPress={() => navigation.navigate("Profile")}>
           Feed
@@ -22,11 +21,6 @@ const Container = styled.View`
   align-items: center;
 
   background-color: ${color.black};
-`;
-
-const Logo = styled.Image`
-  max-width: 50%;
-  height: 200px;
 `;
 
 const CreateAccount = styled.View`
