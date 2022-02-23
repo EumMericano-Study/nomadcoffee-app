@@ -5,7 +5,7 @@ import { gql, useMutation } from "@apollo/client";
 
 import AuthLayout from "../components/auth/AuthLayout";
 import AuthButton from "../components/auth/AuthButton";
-import { isLoggedInVar, logUserIn } from "../apollo";
+import { logUserIn } from "../apollo";
 import { StyledTextInput } from "../components/auth/AuthShared";
 
 const LOGIN_MUTATION = gql`

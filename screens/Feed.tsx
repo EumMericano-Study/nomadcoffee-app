@@ -3,13 +3,13 @@ import styled from "styled-components/native";
 import { color } from "../color";
 import { Props } from "../types";
 
-export default function Welcome({ navigation }: Props) {
+export default function Feed({ navigation }: Props) {
   return (
     <Container>
       <Logo resizeMode="contain" source={require("../assets/charLogo.png")} />
       <CreateAccount>
-        <CreateAccountText onPress={() => navigation.navigate("LogIn")}>
-          Home
+        <CreateAccountText onPress={() => navigation.navigate("Profile")}>
+          Feed
         </CreateAccountText>
       </CreateAccount>
     </Container>

@@ -4,11 +4,11 @@ import { Asset } from "expo-asset";
 import AppLoading from "expo-app-loading";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
-import { ApolloProvider, useReactiveVar } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
+import AsyncStorageLib from "@react-native-async-storage/async-storage";
 
 import TabNav from "./navigators/indexNav";
 import client, { isLoggedInVar, tokenVar } from "./apollo";
-import AsyncStorageLib from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(true);

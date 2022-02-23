@@ -1,21 +1,14 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useReactiveVar } from "@apollo/client";
-import { isLoggedInVar } from "../apollo";
 
-import Feed from "../screens/Feed";
 import Search from "../screens/Search";
-import LogIn from "../screens/LogIn";
-import Profile from "../screens/Profile";
 import Notification from "../screens/Notification";
 import TabIcon from "../components/nav/TabIcon";
-import StackNavFactory from "../components/nav/StackNavFactory";
+import StackNavFactory from "./SharedStackNav";
 
 const Tabs = createBottomTabNavigator();
 
 export default function LoggedOutNav() {
-  const isLoggedIn = useReactiveVar(isLoggedInVar);
-
   return (
     <Tabs.Navigator
       screenOptions={{
@@ -29,7 +22,7 @@ export default function LoggedOutNav() {
       }}
     >
       <Tabs.Screen
-        name="Feed"
+        name="feed"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName="home" color={color} focused={focused} />
@@ -39,7 +32,7 @@ export default function LoggedOutNav() {
         {() => <StackNavFactory screenName="Feed" />}
       </Tabs.Screen>
       <Tabs.Screen
-        name="Search"
+        name="search"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName="search" color={color} focused={focused} />
@@ -49,7 +42,7 @@ export default function LoggedOutNav() {
         {() => <StackNavFactory screenName="Search" />}
       </Tabs.Screen>
       <Tabs.Screen
-        name="Camera"
+        name="camera"
         component={Search}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -58,7 +51,7 @@ export default function LoggedOutNav() {
         }}
       />
       <Tabs.Screen
-        name="Notification"
+        name="notification"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName="heart" color={color} focused={focused} />
@@ -68,7 +61,7 @@ export default function LoggedOutNav() {
         {() => <StackNavFactory screenName="Notification" />}
       </Tabs.Screen>
       <Tabs.Screen
-        name="Me"
+        name="me"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName="person" color={color} focused={focused} />
