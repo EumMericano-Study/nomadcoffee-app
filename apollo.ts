@@ -4,6 +4,7 @@ import {
   InMemoryCache,
   makeVar,
 } from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import AsyncStorageLib from "@react-native-async-storage/async-storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -25,7 +26,16 @@ export const logUserOut = async () => {
   tokenVar(undefined);
 };
 
-const httpLink = createHttpLink({
+const onErrorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    console.log("GraphQL Error", graphQLErrors);
+  }
+  if (networkError) {
+    console.log("Network Error", networkError);
+  }
+});
+
+const uploadHttpLink = createHttpLink({
   uri: "https://nomad-sexy-coffee.herokuapp.com/graphql",
 });
 
@@ -37,6 +47,8 @@ const authLink = setContext((_, { headers }) => {
     },
   };
 });
+
+const httpLink = authLink.concat(onErrorLink).concat(uploadHttpLink);
 
 const client = new ApolloClient({
   link: httpLink,
